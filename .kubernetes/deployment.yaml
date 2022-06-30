@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-http-prometheus
+  namespace: henrod
+  labels:
+    app: simple-http-prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-http-prometheus
+  template:
+    metadata:
+      labels:
+        app: simple-http-prometheus
+    spec:
+      containers:
+      - name: simple-http-prometheus
+        image: henrod/simple-http-prometheus:latest
+        ports:
+        - containerPort: 8081
+        - containerPort: 2112
