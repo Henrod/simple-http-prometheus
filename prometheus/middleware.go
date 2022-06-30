@@ -28,12 +28,12 @@ const (
 
 var (
 	responseTime = promauto.NewHistogramVec(prometheus.HistogramOpts{
-		Namespace:   "henrod",
-		Subsystem:   "simple_http_prometheus",
-		Name:        "http_request_duration_seconds",
-		Help:        "",
+		Namespace:   "http",
+		Subsystem:   "",
+		Name:        "request_duration_seconds",
+		Help:        "Time to serve a request on the server",
 		ConstLabels: nil,
-		Buckets:     nil,
+		Buckets:     prometheus.DefBuckets,
 	}, []string{
 		PathLabel,
 		MethodLabel,
