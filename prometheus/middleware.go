@@ -11,7 +11,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
 type Middleware struct {
@@ -26,22 +25,7 @@ const (
 	metricsPort = 2112
 )
 
-var (
-	responseTime = promauto.NewHistogramVec(prometheus.HistogramOpts{
-		Namespace:   "http",
-		Subsystem:   "",
-		Name:        "request_duration_seconds",
-		Help:        "Time to serve a request on the server",
-		ConstLabels: nil,
-		Buckets:     prometheus.DefBuckets,
-	}, []string{
-		PathLabel,
-		MethodLabel,
-		StatusCodeLabel,
-	})
-
-	once sync.Once
-)
+var once sync.Once
 
 func WithPrometheusMiddleware(next http.HandlerFunc) *Middleware {
 	once.Do(func() {
